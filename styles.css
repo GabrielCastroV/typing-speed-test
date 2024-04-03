@@ -1,0 +1,157 @@
+:root {
+    color-scheme: dark light;
+}
+* {
+    margin: 0;
+    box-sizing: border-box;
+    padding: 0;
+}
+
+body , section{
+    display: flex;
+    justify-content: center;
+    font-family: monospace;
+    gap: 2rem;
+    flex-direction: column;
+    align-content: center;
+    height: 100dvh;
+}
+main {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+}
+
+p {
+    font-size: larger;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+}
+
+.time {
+    color: yellow;
+    font-size: x-large;
+}
+
+input {
+    z-index: -999;
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    opacity: 0;
+}
+
+#game {
+    display: flex;
+    width: 90%;
+    padding: .5rem;
+    place-self: center;
+}
+
+#results {
+    background-color: rgba(40, 39, 39, 0.283);
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-content: center;
+    display: none;
+    margin: 0;
+    border-radius: 10px;
+    padding: 3rem 1rem;
+    place-self: center;
+}
+
+h2, h3 {
+    text-align: center;
+}
+
+h3{
+    color: yellow;
+    font-size: 50px;
+}
+
+.btn {
+    background-color: rgb(58, 58, 58);
+    border-radius: 10px;
+    height: 4rem;
+    width: 50%;
+    align-self: center;
+    padding: .6rem;
+    cursor: pointer;
+
+    &:hover {
+        background-color: rgb(96, 96, 96);
+        transition: all .3s ease-out;
+    }
+}
+.follow {
+    color: rgb(116, 116, 116);
+    margin-top: 24px;
+}
+footer{
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+img {
+    border-radius: 50%;
+    height: 3rem;
+}
+
+letter {
+    color: gray;
+    position: relative;
+
+    &.active::before{
+        content: '|';
+        color: rgb(231, 231, 73);
+        position: absolute;
+        left: -70%;
+        animation: 1s blink infinite ease-in-out;
+    }
+    &.active.is-last::before {
+        left: 70%;
+    }
+
+    &.correct {
+        color: rgb(246, 252, 238);
+    }
+
+    &.incorrect {
+        color: rgb(255, 65, 65);
+    }
+}
+
+word {
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s ease-in-out;
+
+    &.marked {
+        border-color: red;
+    }
+}
+
+@keyframes blink {
+    0%, 25% {
+        opacity: 1;
+    }
+
+    75% {
+        opacity: 0;
+    }
+}
+
+@media (min-width:768px) {
+    .btn {
+        width: 30%;
+    }
+    #results, #game {
+        width: 50%;
+    }
+    p {
+        font-size: xx-large;
+    }
+}
