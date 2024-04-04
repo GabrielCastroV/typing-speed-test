@@ -128,7 +128,7 @@ letter {
         color: rgb(231, 231, 73);
         position: absolute;
         left: -70%;
-        /* animation: 1s blink infinite ease-in-out; */
+        animation: 1s blink infinite ease-in-out;
         transition: all .1s ease;
     }
     &.active.is-last::before {

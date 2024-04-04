@@ -14,7 +14,7 @@ const $pressBtn = document.querySelector('.press-to-play');
 import { randomWords } from './data.js'
 import confetti from 'https://cdn.skypack.dev/canvas-confetti';
 
-const INITIAL_TIME = 3;
+const INITIAL_TIME = 30;
 
 let currentTime = INITIAL_TIME;
 
