@@ -8,17 +8,18 @@ const $results = document.querySelector('#results');
 const $wps = document.querySelector('.wps');
 const $accuracy = document.querySelector('.acc');
 const $btn = document.querySelector('.btn');
+const $playBtn = document.querySelector('.play-btn');
+const $pressBtn = document.querySelector('.press-to-play');
 
 import { randomWords } from './data.js'
 import confetti from 'https://cdn.skypack.dev/canvas-confetti';
 
-const INITIAL_TIME = 30;
+const INITIAL_TIME = 3;
 
 let currentTime = INITIAL_TIME;
 
 let words = [];
 
-initGame();
 initEvents();
 
 function initGame() {
@@ -33,7 +34,7 @@ function initGame() {
 
     $time.textContent = currentTime;
 
-    $paragraph.innerHTML = words.map((word, index) => {
+    $paragraph.innerHTML = words.map(word => {
         const letters = word.split('')
 
         return `<word>
@@ -65,7 +66,17 @@ function initEvents() {
     document.addEventListener('keydown', () => {
         $input.focus();
     })
+    document.addEventListener('click', () => {
+        $input.focus();
+    })
+    // TODO: start btn for mobile
     
+    $playBtn.addEventListener('click', () => {
+        initGame()
+        $input.focus()
+        $playBtn.style.visibility = 'hidden'
+        $pressBtn.style.display = 'none'
+    })
     $input.addEventListener('keydown', onKeyDown)
     $input.addEventListener('keyup', onKeyUp)
     $btn.addEventListener('click', initGame)
@@ -138,10 +149,9 @@ function onKeyUp() {
     $input.maxLength = currentWord.length;
 
     const $allLetters = $currentWord.querySelectorAll('letter');
-
     $allLetters.forEach($letter => $letter.classList.remove('correct', 'incorrect'))
 
-    $input.value.split('').forEach((char, index) => {
+    $input.value.toLocaleLowerCase().split('').forEach((char, index) => {
         const $letter = $allLetters[index]
         const letterToCheck = currentWord[index]
 

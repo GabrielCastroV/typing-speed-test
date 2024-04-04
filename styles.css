@@ -44,6 +44,24 @@ input {
     opacity: 0;
 }
 
+.play-btn {
+    height: 3rem;
+    background-color: rgb(80, 80, 80);
+    color: rgb(224, 224, 223);
+    padding: 0.5rem;
+    width: 80%;
+    place-self: center;
+    margin-top: 15px;
+    border: 1px solid rgb(208, 208, 191);
+    border-radius: 8px;
+    
+
+    &:hover {
+        cursor: pointer;
+        background-color: rgb(130, 131, 131);
+    }
+}
+
 #game {
     display: flex;
     width: 90%;
@@ -110,7 +128,8 @@ letter {
         color: rgb(231, 231, 73);
         position: absolute;
         left: -70%;
-        animation: 1s blink infinite ease-in-out;
+        /* animation: 1s blink infinite ease-in-out; */
+        transition: all .1s ease;
     }
     &.active.is-last::before {
         left: 70%;
@@ -154,4 +173,13 @@ word {
     p {
         font-size: xx-large;
     }
+}
+@media (min-width:1024px) {
+    .play-btn {
+        width: 35%;
+    }
+    .press-to-play {
+        font-size: xx-large;
+    }
+   
 }
