@@ -8,18 +8,17 @@ const $results = document.querySelector('#results');
 const $wps = document.querySelector('.wps');
 const $accuracy = document.querySelector('.acc');
 const $btn = document.querySelector('.btn');
-const $playBtn = document.querySelector('.play-btn');
-const $pressBtn = document.querySelector('.press-to-play');
 
 import { randomWords } from './data.js'
 import confetti from 'https://cdn.skypack.dev/canvas-confetti';
 
-const INITIAL_TIME = 30;
+const INITIAL_TIME = 3000;
 
 let currentTime = INITIAL_TIME;
 
 let words = [];
 
+initGame();
 initEvents();
 
 function initGame() {
@@ -69,17 +68,11 @@ function initEvents() {
     document.addEventListener('click', () => {
         $input.focus();
     })
-    // TODO: start btn for mobile
-    
-    $playBtn.addEventListener('click', () => {
-        initGame()
-        $input.focus()
-        $playBtn.style.visibility = 'hidden'
-        $pressBtn.style.display = 'none'
-    })
-    $input.addEventListener('keydown', onKeyDown)
-    $input.addEventListener('keyup', onKeyUp)
+    $input.addEventListener('input', onInputChange)
+    // $input.addEventListener('keyup', onKeyUp)
     $btn.addEventListener('click', initGame)
+
+    $input.addEventListener('keydown', onKeyDown)
     
 }
 function onKeyDown(event) {
@@ -128,20 +121,22 @@ function onKeyDown(event) {
             $prevWord.classList.add('active');
             $prevWord.classList.remove('marked');
 
-            const $letterToGo = $prevWord.querySelector('letter:last-child');
+            const $letterToGo = $prevWord.querySelector('letter:last-child'); // no seria ir mejor al primer child de incorrect? o al primer child missing?
 
             $currentLetter.classList.remove('active');
             $letterToGo.classList.add('active');
 
             $input.value = [
                 ...$prevWord.querySelectorAll('letter.correct, letter.incorrect')
+                
             ].map($el => {
                 return $el.classList.contains('correct') ? $el.innerHTML : '*'
             }).join('')
         }
     }
 }
-function onKeyUp() {
+
+function onInputChange(event) {
     const $currentWord = $paragraph.querySelector('word.active');
     const $currentLetter = $currentWord.querySelector('letter.active');
 
@@ -160,7 +155,7 @@ function onKeyUp() {
         const letterClass = isCorrect ? 'correct' : 'incorrect'
         $letter.classList.add(letterClass)
     })
-
+    
     $currentLetter.classList.remove('active', 'is-last')
     const inputLength = $input.value.length;
     const $nextActiveLetter = $allLetters[inputLength]
@@ -170,8 +165,8 @@ function onKeyUp() {
     } else {
         $currentLetter.classList.add('active', 'is-last')
     }
-}
 
+}
 
 function gameOver() {
     
