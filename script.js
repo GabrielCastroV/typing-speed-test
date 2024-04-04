@@ -12,7 +12,7 @@ const $btn = document.querySelector('.btn');
 import { randomWords } from './data.js'
 import confetti from 'https://cdn.skypack.dev/canvas-confetti';
 
-const INITIAL_TIME = 3000;
+const INITIAL_TIME = 30;
 
 let currentTime = INITIAL_TIME;
 
