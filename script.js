@@ -78,14 +78,13 @@ function initEvents() {
 function onKeyDown(event) {
     const $currentWord = $paragraph.querySelector('word.active');
     const $currentLetter = $currentWord.querySelector('letter.active');
-    const { key } = event
-
+    const { key, keyCode } = event
     if (key === 'Tab') {
         event.preventDefault()
         return
     }
 
-    if (key === ' ') {
+    if (key === ' ' || key === 32 || keyCode === 32) {
         event.preventDefault();
 
         const $nextWord = $currentWord.nextElementSibling;
@@ -118,11 +117,12 @@ function onKeyDown(event) {
         const $wordMarked = $paragraph.querySelector('word.marked');
         if ($wordMarked && !$prevLetter) {
             event.preventDefault();
+            $currentWord.classList.remove('active')
+
             $prevWord.classList.add('active');
             $prevWord.classList.remove('marked');
 
-            const $letterToGo = $prevWord.querySelector('letter:last-child'); // no seria ir mejor al primer child de incorrect? o al primer child missing?
-
+            const $letterToGo = $prevWord.querySelector('letter:not(.correct):not(.incorrect)') ?? $prevWord.querySelector('letter:last-child');
             $currentLetter.classList.remove('active');
             $letterToGo.classList.add('active');
 
@@ -136,7 +136,7 @@ function onKeyDown(event) {
     }
 }
 
-function onInputChange(event) {
+function onInputChange() {
     const $currentWord = $paragraph.querySelector('word.active');
     const $currentLetter = $currentWord.querySelector('letter.active');
 
