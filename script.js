@@ -78,12 +78,12 @@ function initEvents() {
 function onKeyDown(event) {
     const $currentWord = $paragraph.querySelector('word.active');
     const $currentLetter = $currentWord.querySelector('letter.active');
-    const { key, keyCode } = event
+    const { key } = event
     if (key === 'Tab') {
         event.preventDefault()
         return
     }
-    
+
     if (key === ' ' || $input.value.includes(' ')) {
         event.preventDefault();
 
@@ -136,18 +136,41 @@ function onKeyDown(event) {
     }
 }
 
-function onInputChange() {
+function onInputChange(event) {
     const $currentWord = $paragraph.querySelector('word.active');
     const $currentLetter = $currentWord.querySelector('letter.active');
 
     const currentWord = $currentWord.innerText.trim();
-    $input.maxLength = currentWord.length;
+    $input.maxLength = currentWord.length + 1;
+
+
+    if ($input.value.includes(' ') || $input.value[currentWord.length] === ' ') {
+        event.preventDefault();
+
+        const $nextWord = $currentWord.nextElementSibling;
+        const $nextLetter = $nextWord.querySelector('letter')
+
+        $currentWord.classList.remove('active', 'marked')
+        $currentLetter.classList.remove('active')
+
+        $nextWord.classList.add('active')
+        $nextLetter.classList.add('active')
+
+        $input.value = ''
+
+        const hasMissedLetters = $currentWord.querySelectorAll('letter:not(.correct)').length > 0
+
+        const classToAdd =  hasMissedLetters ? 'marked' : 'correct'
+        $currentWord.classList.add(classToAdd)
+        return
+    }
 
     const $allLetters = $currentWord.querySelectorAll('letter');
     $allLetters.forEach($letter => $letter.classList.remove('correct', 'incorrect'))
 
     $input.value.toLocaleLowerCase().split('').forEach((char, index) => {
         const $letter = $allLetters[index]
+        if (!$letter) return
         const letterToCheck = currentWord[index]
 
         const isCorrect = char === letterToCheck;
