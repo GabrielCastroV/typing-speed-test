@@ -83,8 +83,8 @@ function onKeyDown(event) {
         event.preventDefault()
         return
     }
-
-    if (key === ' ' || key === 32 || keyCode === 32) {
+    
+    if (key === ' ' || $input.value.includes(' ')) {
         event.preventDefault();
 
         const $nextWord = $currentWord.nextElementSibling;
