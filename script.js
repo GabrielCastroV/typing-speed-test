@@ -141,7 +141,7 @@ function onInputChange(event) {
     const $currentLetter = $currentWord.querySelector('letter.active');
 
     const currentWord = $currentWord.innerText.trim();
-    $input.maxLength = currentWord.length + 1;
+    $input.maxLength = currentWord.length;
 
 
     if ($input.value.includes(' ') || $input.value[currentWord.length] === ' ') {
